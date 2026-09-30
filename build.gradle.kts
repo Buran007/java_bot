@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "ru.meetbot"
-version = "0.1.0"
+version = "0.2.0"
 
 repositories {
     mavenCentral()
@@ -21,24 +21,24 @@ application {
 }
 
 dependencies {
+    implementation(libs.telegrambots.longpolling)
+    implementation(libs.telegrambots.client)
+    implementation(libs.postgresql)
+    implementation(libs.hikari)
+    implementation(libs.flyway.core)
+    implementation(libs.flyway.postgresql)
+    implementation(libs.slf4j.simple)
     testImplementation(libs.junit.jupiter)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
+    options.compilerArgs.add("-Xlint:deprecation")
 }
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.withType<JavaExec>().configureEach {
-    jvmArgs(application.applicationDefaultJvmArgs)
-}
-
-tasks.named<JavaExec>("run") {
-    standardInput = System.`in`
 }
 
 dependencyLocking {
